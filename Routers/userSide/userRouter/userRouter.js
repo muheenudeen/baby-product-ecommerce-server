@@ -1,13 +1,7 @@
-const mongoose = require("mongoose");
+import express from 'express'
+import { userController } from "../../../Controller/userSide/userController/userController.js"
+const userRouter = express.Router()
 
-const userSchema = new mongoose.Schema({
-    fname: String,
-    sname: String,
-    email: String,
-    password: String,  // This should be stored after hashing
-    // No need to store confirmpassword in the schema
-});
+userRouter.post("/signup",userController.signUp)
 
-const User = mongoose.model('User', userSchema);
-
-module.exports = User;
+export default userRouter

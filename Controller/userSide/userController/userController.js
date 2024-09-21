@@ -1,15 +1,26 @@
-const User = require("../models/userSchema");
+import bcrypt from "bcryptjs"
+import User from "../../../Model/userSchema/userSchema.js";
+
 
 const signUp = async (req, res) => {
     try {
-        const user = new User(req.body); // Use lowercase 'user' for the instance
-        await user.save(); // Save the user to the database
-        res.status(201).json(user); // Send the saved user as a response
+        
+        const hashedPassword = await bcrypt.hash(req.body.password,10);
+
+        const user = new User ({
+            fname:req.body.fname,
+            sname:req.body.sname,
+            email:req.body.email,
+            password:hashedPassword
+        })
+
+        await user.save();
+        res.status(201).json(user);
     } catch (error) {
         res.status(500).json({ message: "Error signing up", error: error.message });
     }
 };
 
-module.exports = {
+export const userController = {
     signUp
-};
+}
