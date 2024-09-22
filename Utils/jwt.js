@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 
-const genetateToken = (userId) =>{
+const generateToken = (userId) =>{
     return jwt.sign({_id : userId},process)
 }
 
-export default genetateToken
+export default generateToken

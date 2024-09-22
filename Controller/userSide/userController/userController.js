@@ -1,5 +1,7 @@
 import User from "../../../Model/userSchema/userSchema.js";
 import { bcryptData } from "../../../Utils/bcrypt.js";
+import generateToken from "../../../Utils/jwt.js";
+
 
 // Registration
 const signUp = async (req, res) => {
@@ -47,10 +49,33 @@ const signUp = async (req, res) => {
         if(!user){
             return res.status(400).json({
                 success:false,
+                message:"No user found. create new account",
+                
             })
         }
+
+        const comparePassword = await bcryptData.comparePassword(password, user.password);
+        if(!comparePassword){
+            return res
+            .status(401)
+            .json({success:false, messsage: "incorrect typing"})
+
+
         
-    } catch (error) {
+    } 
+    const token = generateToken(user.id)
+
+    res.status(200).json({
+        success:true,
+        data:user,
+        token,
+    })
+
+    
+}catch (error) {
+    res
+    .status(500)
+    .json({success:false, message:"check request"})
         
     }
    }
