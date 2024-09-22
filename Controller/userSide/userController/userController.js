@@ -58,4 +58,5 @@ const signUp = async (req, res) => {
 
    export const userController = {
     signUp,
+    login,
 };
