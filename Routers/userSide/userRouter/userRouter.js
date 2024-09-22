@@ -3,5 +3,6 @@ import { userController } from "../../../Controller/userSide/userController/user
 const userRouter = express.Router()
 
 userRouter.post("/signup",userController.signUp)
+userRouter.post("/login",userController.login)
 
 export default userRouter

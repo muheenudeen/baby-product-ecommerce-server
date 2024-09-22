@@ -58,7 +58,7 @@ const signUp = async (req, res) => {
         if(!comparePassword){
             return res
             .status(401)
-            .json({success:false, messsage: "incorrect typing"})
+            .json({success:false, message: "incorrect typing"})
 
 
         
@@ -75,7 +75,9 @@ const signUp = async (req, res) => {
 }catch (error) {
     res
     .status(500)
-    .json({success:false, message:"check request"})
+    .json({
+        success:false, 
+        message:"Server error. Please check your request"})
         
     }
    }
