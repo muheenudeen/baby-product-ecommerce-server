@@ -28,6 +28,30 @@ const getProducts =async (req,res)=>{
     }
 }
 
+//productsId
+
+const productsId = async (req,res)=>{
+    try {
+        const {id}= req.params.id;
+        if(!mongoose.Types.ObjectId.isValid(id)){
+            return res.status(400).json({success:false , message:"productId invalid" })
+        }
+
+        const product = await productsSchema.findById(id)
+        if(!product){
+            return res.status(404).json({success:false, message:"product not founded"})
+
+        }
+        res.status(200).json({success:true, message:"product fetched by id"})
+
+
+    } catch (error) {
+        res.status(500).json({success:false, message:`server errror ${error.message}`})
+    }
+}
+
+
 export const productController = {
     getProducts,
+    productsId,
 }
