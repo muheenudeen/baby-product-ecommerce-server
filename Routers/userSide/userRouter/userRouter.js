@@ -6,4 +6,6 @@ userRouter.post("/signup",userController.signUp)
 userRouter.post("/login",userController.login)
 userRouter.post("/logout",userController.logout)
 
+userRouter.pos("/products",userController)
+
 export default userRouter
