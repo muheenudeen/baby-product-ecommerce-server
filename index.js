@@ -1,6 +1,10 @@
 import express from "express";
 import mongoose from "mongoose";
 import userRouter from "./Routers/userSide/userRouter/userRouter.js";
+import dotenv from 'dotenv';
+
+
+dotenv.config();
 
 const app = express();
 const PORT = 2001;

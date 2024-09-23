@@ -44,7 +44,8 @@ const signUp = async (req, res) => {
    const login = async (req,res)=>{
     try {
         const {email ,password} = req.body;
-        const user = await userSchema.findOne({ email });
+
+        const user = await User.findOne({ email });
 
         if(!user){
             return res.status(400).json({
@@ -58,7 +59,7 @@ const signUp = async (req, res) => {
         if(!comparePassword){
             return res
             .status(401)
-            .json({success:false, message: "incorrect typing"})
+            .json({success:false, message: "incorrect password"})
 
 
         
@@ -73,11 +74,10 @@ const signUp = async (req, res) => {
 
     
 }catch (error) {
-    res
-    .status(500)
+    res.status(500)
     .json({
         success:false, 
-        message:"Server error. Please check your request"})
+        message:`Server error. Please check your request ${error.message}`})
         
     }
    }
