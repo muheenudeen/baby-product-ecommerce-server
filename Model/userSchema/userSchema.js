@@ -4,11 +4,11 @@ const userSchema = new mongoose.Schema({
   fname: {
     type: String,
     required: true,
-    minlength: 6,
+    
   },
   sname: {
     type: String,
-    required: true,
+    
   },
   email: {
     type: String,
@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    minlength: 7,
+    minlength: 6,
   },
   profileImg: {
     type: String,

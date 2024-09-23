@@ -8,6 +8,6 @@ userRouter.post("/login",userController.login)
 userRouter.post("/logout",userController.logout)
 
 userRouter.get("/products",productController.getProducts)
-userRouter.get("/productsid",productController.getProductsId)
+userRouter.get("/products/:id",productController.getProductsId)
 
 export default userRouter

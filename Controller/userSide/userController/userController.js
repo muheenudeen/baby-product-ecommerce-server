@@ -6,8 +6,10 @@ import generateToken from "../../../Utils/jwt.js";
 // Registration
 const signUp = async (req, res) => {
     try {
+        // console.log("Request body:", req.body);
+        
         const { fname, sname, email, password, address, city, state, pincode, contact } = req.body;
-
+        
         const emailChecking = await User.findOne({ email });
         if (emailChecking) {
             return res.status(400).json({
@@ -15,9 +17,12 @@ const signUp = async (req, res) => {
                 message: "Email already exists...",
             });
         }
-
-        const hashedPassword = await bcryptData.hashedPassword(password);
-
+        
+        console.log("Email is unique");
+        
+        const hashedPassword = await bcryptData.hashedPassword(password); 
+        console.log("Hashed password:", hashedPassword);
+        
         const user = new User({
             fname,
             sname,
@@ -29,14 +34,17 @@ const signUp = async (req, res) => {
             pincode,
             contact,
         });
-
+        
         await user.save();
-
+        console.log("User saved successfully:", user);
+        
         res.status(201).json(user);
     } catch (error) {
+        console.error("Error during sign up:", error); // Log the actual error
         res.status(500).json({ message: "Internal server error" });
     }
 };
+
 
 
    //login
