@@ -4,5 +4,6 @@ const userRouter = express.Router()
 
 userRouter.post("/signup",userController.signUp)
 userRouter.post("/login",userController.login)
+userRouter.post("/logout",userController.logout)
 
 export default userRouter
