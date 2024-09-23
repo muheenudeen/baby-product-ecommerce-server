@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import productsSchema from "../../../Model/productSchema/productSchema";
+import productsSchema from "../../../Model/productSchema/productSchema.js";
 
 //all products
 
@@ -30,7 +30,7 @@ const getProducts =async (req,res)=>{
 
 //productsId
 
-const productsId = async (req,res)=>{
+const getProductsId = async (req,res)=>{
     try {
         const {id}= req.params.id;
         if(!mongoose.Types.ObjectId.isValid(id)){
@@ -42,7 +42,7 @@ const productsId = async (req,res)=>{
             return res.status(404).json({success:false, message:"product not founded"})
 
         }
-        res.status(200).json({success:true, message:"product fetched by id"})
+        res.status(200).json({success:true,data:product, message:"product fetched by id"})
 
 
     } catch (error) {
@@ -53,5 +53,8 @@ const productsId = async (req,res)=>{
 
 export const productController = {
     getProducts,
-    productsId,
+    getProductsId,
 }
+
+
+

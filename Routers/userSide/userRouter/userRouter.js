@@ -7,7 +7,7 @@ userRouter.post("/signup",userController.signUp)
 userRouter.post("/login",userController.login)
 userRouter.post("/logout",userController.logout)
 
-userRouter.post("/products",productController.getProducts)
-userRouter.post("/productsid",productController.productsId)
+userRouter.get("/products",productController.getProducts)
+userRouter.get("/productsid",productController.getProductsId)
 
 export default userRouter
