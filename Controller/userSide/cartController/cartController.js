@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import User from "../../../Model/userSchema/userSchema.js";
 import productsSchema from "../../../Model/productSchema/productSchema.js";
 import cartSchema from "../../../Model/cartSchema/cartSchema.js";
+import { populate } from "dotenv";
 
 const addToCart = async (req, res) => {
   try {
@@ -48,4 +49,34 @@ const addToCart = async (req, res) => {
   }
 };
 
-export default addToCart;
+//display cart product
+
+const getCart = async (req,res)=>{
+    try {
+        const userId = req.params.id;
+
+        if(!mongoose.Types.ObjectId.isValid(userId)){
+            return res.status(400).json({success:false , message:"no user founded"})
+        }
+        const cart = await cartSchema
+        .findOne({userId})
+        populate("product.productId")
+
+        if(!cart)
+        {
+            return res.status(400).json({success:false , message:"cart not found"});
+        }
+
+        res.status(200).json({success:true , message:"cart feched successfull"})
+    } catch (error) {
+        res.status(500).json({
+            success:false,
+            message:`cart fatched faild ${error.message}`
+        })
+    }
+}
+
+export const cartController ={
+    addToCart,
+    getCart,
+}

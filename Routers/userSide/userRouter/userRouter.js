@@ -1,7 +1,9 @@
 import express from 'express'
 import { userController } from "../../../Controller/userSide/userController/userController.js"
 import { productController } from '../../../Controller/userSide/productController/productController.js'
-import addToCart from '../../../Controller/userSide/cartController/cartController.js'
+import { cartController } from '../../../Controller/userSide/cartController/cartController.js'
+
+
 const userRouter = express.Router()
 
 userRouter.post("/signup",userController.signUp)
@@ -11,7 +13,8 @@ userRouter.post("/logout",userController.logout)
 userRouter.get("/products",productController.getProducts)
 userRouter.get("/products/:id",productController.getProductsId)
 
-userRouter.post("/:id/cart", addToCart)
+userRouter.post("/:id/cart", cartController.addToCart)
+userRouter.get("/:id/cart",cartController.getCart)
 
 
 export default userRouter
