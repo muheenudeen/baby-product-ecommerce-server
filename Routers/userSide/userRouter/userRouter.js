@@ -15,6 +15,7 @@ userRouter.get("/products/:id",productController.getProductsId)
 
 userRouter.post("/:id/cart", cartController.addToCart)
 userRouter.get("/:id/cart",cartController.getCart)
+userRouter.delete("/:id/cart",cartController.removeCart)
 
 
 export default userRouter
