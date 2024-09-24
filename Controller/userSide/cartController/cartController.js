@@ -181,27 +181,101 @@ const removeCart = async (req, res) => {
 
   //increment of product
 
-  const productIncrement =(req,res)=>{
+  // const productIncrement =(req,res)=>{
+  //   try {
+      
+  //    const userId = req.params.id;
+  //    const {productId , quantity} = req.body
+
+  //    if(!mongoose.Types.ObjectId.isValid(userId)){
+  //     return res.status(400).json({success:false, message:"no user found"})
+
+  //    }
+  //    const cart = await cartSchema.findOne({userId})
+
+  //    const productExist = cart.products.findIndex(
+  //     (product)=>product.productId.toString()===productId
+
+  //   )
+
+  //   if(productExist===-1){
+  //     return res.status(404).json({success:false, message:"product not founded"})
+
+  //   }
+  //   const product =cart.product.findIndex(
+  //     (product) => product.productId.toString() === productId
+  //   );
+
+  //   if(product >=0){
+  //     cart.products[product].quantity +=1
+  //   }
+
+  //   await cart.save()
+
+  //   res.json({
+  //     success:true,
+  //     message:"product uantity successful",
+  //     data:cart
+  //   })
+
+  //   } catch (error) {
+      
+  //     res.status(200).json({success:false, message:`${error.message}`})
+
+  //   }
+  // }
+
+  const productIncrement = async (req, res) => {
     try {
-      
-     const userId = req.params.id;
-     const {productId , quantity} = req.body
-
-     if(!mongoose.Types.ObjectId.isValid(userId)){
-      return res.status(400).json({success:false, message:"no user found"})
-
-     }
-     const cart = await cartSchema.findOne({userId})
-
-     const productExist = 
-
+      const userId = req.params.id;
+      const { productId, quantity } = req.body;
+  
+      // Check if userId is valid
+      if (!mongoose.Types.ObjectId.isValid(userId)) {
+        return res.status(400).json({ success: false, message: "No user found" });
+      }
+  
+      // Fetch the cart for the given user
+      const cart = await cartSchema.findOne({ userId });
+      if (!cart) {
+        return res.status(404).json({ success: false, message: "Cart not found" });
+      }
+  
+      // Find the product in the cart
+      const productIndex = cart.products.findIndex(
+        (product) => product.productId.toString() === productId
+      );
+  
+      // If product doesn't exist in the cart
+      if (productIndex === -1) {
+        return res.status(404).json({ success: false, message: "Product not found" });
+      }
+  
+      // Increment the product quantity
+      if (quantity && quantity > 0) {
+        cart.products[productIndex].quantity += quantity;
+      } else {
+        cart.products[productIndex].quantity += 1;
+      }
+  
+      // Save the updated cart
+      await cart.save();
+  
+      // Respond with success
+      res.json({
+        success: true,
+        message: "Product quantity updated successfully",
+        data: cart,
+      });
     } catch (error) {
-      
+      res.status(500).json({ success: false, message: `Server error: ${error.message}` });
     }
-  }
+  };
+  
 
 export const cartController ={
     addToCart,
     getCart,
     removeCart,
+    productIncrement,
 }
