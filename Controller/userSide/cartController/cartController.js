@@ -179,6 +179,27 @@ const removeCart = async (req, res) => {
   };
   
 
+  //increment of product
+
+  const productIncrement =(req,res)=>{
+    try {
+      
+     const userId = req.params.id;
+     const {productId , quantity} = req.body
+
+     if(!mongoose.Types.ObjectId.isValid(userId)){
+      return res.status(400).json({success:false, message:"no user found"})
+
+     }
+     const cart = await cartSchema.findOne({userId})
+
+     const productExist = 
+
+    } catch (error) {
+      
+    }
+  }
+
 export const cartController ={
     addToCart,
     getCart,
