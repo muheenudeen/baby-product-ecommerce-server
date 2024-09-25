@@ -7,7 +7,7 @@ const wishListSchema = new mongoose.Schema({
             require:true
         
     },
-    products:[
+    products: [
         {
             productId: {
                 type:mongoose.Schema.Types.ObjectId,
