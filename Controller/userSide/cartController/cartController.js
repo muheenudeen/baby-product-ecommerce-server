@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import User from "../../../Model/userSchema/userSchema.js";
 import productsSchema from "../../../Model/productSchema/productSchema.js";
 import cartSchema from "../../../Model/cartSchema/cartSchema.js";
-import { populate } from "dotenv";
 
 const addToCart = async (req, res) => {
   try {
@@ -271,6 +270,51 @@ const removeCart = async (req, res) => {
       res.status(500).json({ success: false, message: `Server error: ${error.message}` });
     }
   };
+
+  //decrement
+
+  const productDecrement = async(req,res)=>{
+    try {
+      const userId=req.params.id;
+      const {productId,quantity}=req.body;
+
+      if(!mongoose.Types.ObjectId.isValid(userId)){
+        return res.status(404).json({success:false, message:"user no find"})
+      }
+      const Cart=await cartSchema.findOne({userId});
+
+      const productExist = Cart.products.findIndex(
+        (product)=>product.productId.toString()===productId
+      );
+
+      if(productExist=== -1){
+        res.status(404).json({success:false, message:"product no found"})
+      }
+
+      if(!Cart){
+        return res.status(404).json({success:false, message:"cart no found"})
+      }
+
+      const product = Cart.products.findIndex(
+        (product)=>product.productId.toString()=== productId
+      )
+
+      if(product>= 0){
+        Cart.products[product].quantity -=1
+      }
+      if(Cart.products[product].quantity <1){
+        Cart.products[product].quantity = 1;
+      }
+      await Cart.save()
+      res.json({success:false, message:"decrement successful" ,data:Cart})
+
+
+    } catch (error) {
+
+      res.status(200).json({success:false, message:`${error.message}`})
+      
+    }
+  }
   
 
 export const cartController ={
@@ -278,4 +322,5 @@ export const cartController ={
     getCart,
     removeCart,
     productIncrement,
+    productDecrement,
 }
