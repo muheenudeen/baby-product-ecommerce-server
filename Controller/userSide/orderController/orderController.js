@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import orderSchemas from "../../../Model/orderSchema/orderSchema";
+import orderSchemas from "../../../Model/orderSchema/orderSchema.js";
 
 
 //order display

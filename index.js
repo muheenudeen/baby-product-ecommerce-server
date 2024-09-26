@@ -13,6 +13,7 @@ const PORT = 3002;
 app.use(express.json());
 
 
+
 app.use('/api/user', userRouter);
 app.use(express.urlencoded({ extended: false }));
 
@@ -27,7 +28,7 @@ app.listen(PORT, () => {
 // Mongoose Connection
 async function main() {
   try {
-    await mongoose.connect('mongodb+srv://muheenudeen313:yTrSorSVsV3DV90f@cluster0.n4jdg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
+    await mongoose.connect(process.env.MONGO_CONNECTION);
     console.log("MongoDB connected successfully");
   } catch (error) {
     console.error("MongoDB connection error:", error);

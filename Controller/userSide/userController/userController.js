@@ -18,7 +18,7 @@ const signUp = async (req, res) => {
             });
         }
         
-        console.log("Email is unique");
+        // console.log("Email is unique");
         
         const hashedPassword = await bcryptData.hashedPassword(password); 
         console.log("Hashed password:", hashedPassword);
@@ -36,11 +36,11 @@ const signUp = async (req, res) => {
         });
         
         await user.save();
-        console.log("User saved successfully:", user);
+        // console.log("User saved successfully:", user);
         
         res.status(201).json(user);
     } catch (error) {
-        console.error("Error during sign up:", error); // Log the actual error
+        console.error("Error during sign up:", error); 
         res.status(500).json({ message: "Internal server error" });
     }
 };

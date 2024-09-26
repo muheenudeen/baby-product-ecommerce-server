@@ -1,37 +1,33 @@
-import { cartController } from "../../Controller/userSide/cartController/cartController.js";
+import { addToCart, productDecrement, productIncrement } from "../../Controller/userSide/cartController/cartController.js";
 
 
-const cartMIddleware = (req,res,next)=>{
+
+
+ const  cartMiddleware=(req,res,next)=>{
     try {
-        
-    const {action}=req.body;
-
-    if(action === "increment"){
-        req.controller = cartController.productIncrement;
-    }else if (action === "decrement"){
-        req.controller = cartController.productDecrement;
-
-    }else{
-        req.controller = cartController.addToCart;
-    }
-    next()
-
+        const {action}=req.body;
+        if(action === "increment"){
+            req.controller=productIncrement;
+        }
+        else if(action === "decrement"){
+            req.controller=productDecrement;
+        }
+        else{
+            req.controller=addToCart
+        }
+        next()
     } catch (error) {
-        res.status(500)
-        .json({success:false, message:`${error.message}`})
-        
+        res
+      .status(500)
+      .json({ success: false, message: `Bad request ${error.message}` });
     }
 }
-
-//cart conttroller
-
-const cartControllers = (req,res,next)=>{
-    try{
+const cartControllers= async(req,res,next)=>{
+    try {
         req.controller(req,res,next)
-
-    }catch(error){
-        res.status(500).json({success:false, message:`${error.message}`})
-    }
+    } catch (error) {
+        res.status(500).json({success:false,message:`bad request ${error.message}`})
+    }
 }
 
-export {cartMIddleware ,cartControllers}
+export { cartMiddleware, cartControllers };
