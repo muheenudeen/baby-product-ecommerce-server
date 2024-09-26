@@ -22,7 +22,5 @@ const authData =async (req,res,next)=>{
     }
 }
 
-export const authDatas = {
-    authData,
+export default authData
 
-}

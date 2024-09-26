@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+
 const app = express();
 const PORT = 3002;
 
@@ -13,6 +14,8 @@ app.use(express.json());
 
 
 app.use('/api/user', userRouter);
+app.use(express.urlencoded({ extended: false }));
+
 
 
 app.listen(PORT, () => {

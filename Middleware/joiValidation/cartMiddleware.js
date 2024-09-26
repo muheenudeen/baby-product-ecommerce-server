@@ -1,5 +1,6 @@
 import { cartController } from "../../Controller/userSide/cartController/cartController.js";
 
+
 const cartMIddleware = (req,res,next)=>{
     try {
         
@@ -16,7 +17,7 @@ const cartMIddleware = (req,res,next)=>{
     next()
 
     } catch (error) {
-        res.send(500)
+        res.status(500)
         .json({success:false, message:`${error.message}`})
         
     }
@@ -29,11 +30,8 @@ const cartControllers = (req,res,next)=>{
         req.controller(req,res,next)
 
     }catch(error){
-        res.send(500).json({success:false, message:`${error.message}`})
+        res.status(500).json({success:false, message:`${error.message}`})
     }
 }
 
-export const cartMIddlewares ={
-    cartMIddleware,
-    cartControllers,
-}
+export {cartMIddleware ,cartControllers}
