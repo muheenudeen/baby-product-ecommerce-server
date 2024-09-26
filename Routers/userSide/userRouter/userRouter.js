@@ -21,9 +21,9 @@ userRouter.post("/:id/cart",cartMiddleware, cartControllers)
 userRouter.get("/:id/cart", getCart)
 userRouter.delete("/:id/cart", authData, removeCart)
 
-userRouter.post("/:id/wishalists", authData, wishlistController.addToWishList)
-userRouter.get("/:id/wishalists", authData, wishlistController.getWishList)
-userRouter.delete("/:id/wishalists", authData, wishlistController.deleteWishList)
+userRouter.post("/:id/wishlists", authData, wishlistController.addToWishList)
+userRouter.get("/:id/wishlists", authData, wishlistController.getWishList)
+userRouter.delete("/:id/wishlists", authData, wishlistController.deleteWishList)
 
 userRouter.get("/:id/orders",authData,getOrders)
 

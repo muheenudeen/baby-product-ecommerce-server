@@ -53,6 +53,8 @@ const addToWishList = async (req, res) => {
   }
 };
 
+ // show wishlist
+
 const getWishList = async (req, res) => {
   try {
     const userId = req.params.id;
@@ -76,6 +78,8 @@ const getWishList = async (req, res) => {
     res.status(500).json({ success: false, errors: [`Failed to fetch list: ${error.message}`] });
   }
 };
+
+   // remove wishlist
 
 const deleteWishList = async (req, res) => {
   try {

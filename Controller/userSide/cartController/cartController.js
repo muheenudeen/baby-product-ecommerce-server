@@ -52,6 +52,7 @@ const addToCart = async (req, res) => {
 };
 
 // Display cart products
+
 const getCart = async (req, res) => {
   try {
     const userId = req.params.id;
@@ -119,6 +120,8 @@ const removeCart = async (req, res) => {
 };
 
 // Increment product quantity
+
+
 const productIncrement = async (req, res) => {
   try {
     const userId = req.params.id;
@@ -156,6 +159,8 @@ const productIncrement = async (req, res) => {
 };
 
 // Decrement product quantity
+
+
 const productDecrement = async (req, res) => {
   try {
     const userId = req.params.id;
