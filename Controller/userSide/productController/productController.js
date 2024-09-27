@@ -6,7 +6,7 @@ import productsSchema from "../../../Model/productSchema/productSchema.js";
 const getProducts = async (req, res) => {
     try {
 
-        const { category } = req.query;
+        const { category } = req.body;
         let getProducts;
 
 
