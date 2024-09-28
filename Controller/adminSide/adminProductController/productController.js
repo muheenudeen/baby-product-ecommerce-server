@@ -1,29 +1,31 @@
 import mongoose from "mongoose";
 import productsSchema from "../../../Model/productSchema/productSchema";
+import { productValidation } from "../../../Middleware/joiValidation/productValidation";
 
 
-const getAllProducts = async (req,res)=>{
+export const addProducts = async (req,res)=>{
+
     try {
 
-    const {category} = req.query;
-     let getAllProduct
+        const {title, price, category} = req.body;
 
-     if(category){
-        getAllProduct = await productsSchema.find({category})
+        const validateProduct = await productValidation.validateAsync(req.body)
+        
+        const existProduct = await productsSchema.findOne({title})
 
-        if(getAllProduct.length === 0){
-            return res.status(400).json({success:false, message:"product not found"})
+        if(existProduct){
+            return res.status(401).json({success:false, message:`product alredy existed ${title}`})
+
         }
 
-     }else{
-        getAllProduct = await productsSchema.find();
+        const newProduct = new productsSchema(validateProduct)
 
-     }
-     res.status(200).json({success:true, message:"products fetched succcessfull" , data:getAllProduct})
+        await newProduct.save()
 
-        
+        res.status(200).json({success:true, message:"product added" ,newProduct})
     } catch (error) {
-        res.status(500).json({success:false , message:``})
         
+        res.status(500).json({success:false, message:`bad request ${error.message}`})
     }
+
 }
