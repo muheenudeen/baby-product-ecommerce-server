@@ -25,7 +25,7 @@ export const addProducts = async (req,res)=>{
         res.status(200).json({success:true, message:"product added" ,newProduct})
     } catch (error) {
         
-        res.status(500).json({success:false, message:`bad request ${error.message}`})
+        res.status(500).json({success:false, message:`bad request${error.message}`})
     }
 
 }
