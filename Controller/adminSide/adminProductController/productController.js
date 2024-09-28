@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import productsSchema from "../../../Model/productSchema/productSchema";
-import { productValidation } from "../../../Middleware/joiValidation/productValidation";
+import productsSchema from "../../../Model/productSchema/productSchema.js";
+import { productValidation } from "../../../Middleware/joiValidation/productValidation.js";
 
 
 export const addProducts = async (req,res)=>{
@@ -29,3 +29,6 @@ export const addProducts = async (req,res)=>{
     }
 
 }
+
+
+
