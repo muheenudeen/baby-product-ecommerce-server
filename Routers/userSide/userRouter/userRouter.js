@@ -1,16 +1,21 @@
 import express from 'express'
-import { userController } from "../../../Controller/userSide/userController/userController.js"
 import { productController } from '../../../Controller/userSide/productController/productController.js'
 import { wishlistController } from '../../../Controller/userSide/wishListController/wishListController.js'
 import authData from '../../../Middleware/joiValidation/authData.js'
 import { cartControllers, cartMiddleware } from '../../../Middleware/joiValidation/cartMiddleware.js'
 import { getCart, removeCart } from '../../../Controller/userSide/cartController/cartController.js'
 import { getOrders , addOrder } from '../../../Controller/userSide/orderController/orderController.js'
+import { authController } from '../../../Controller/authController/authController.js'
 const userRouter = express.Router()
 
-userRouter.post("/signup", userController.signUp)
-userRouter.post("/login", userController.login)
-userRouter.post("/logout", userController.logout)
+// userRouter.post("/signup", userController.signUp)
+// userRouter.post("/login", userController.login)
+// userRouter.post("/logout", userController.logout)
+
+
+userRouter.post("/signup",authController.signUp)
+userRouter.post("/login",authController.login)
+userRouter.post("/logout",authController.logout)
 
 userRouter.get("/products", productController.getProducts,)
 userRouter.get("/products/:id", productController.getProductsId)

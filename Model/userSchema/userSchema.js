@@ -47,6 +47,11 @@ const userSchema = new mongoose.Schema({
   contact: {
     type: Number,
   },
+  role: {
+    type:String,
+    enum:["user","admin"],
+    default:"user",
+  },
   order: [
     {
       type: mongoose.Schema.Types.ObjectId,

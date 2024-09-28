@@ -1,7 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
-import userRouter from "./Routers/userSide/userRouter/userRouter.js";
 import dotenv from 'dotenv';
+import userRouter from "./Routers/userSide/userRouter/userRouter.js";
+import adminRouter from "./Routers/adminSide/adminRouter/adminRouter.js";
 
 
 dotenv.config();
@@ -15,9 +16,9 @@ app.use(express.json());
 
 
 app.use('/api/user', userRouter);
+app.use("/api/admin", adminRouter)
+
 app.use(express.urlencoded({ extended: false }));
-
-
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
@@ -35,4 +36,5 @@ async function main() {
     process.exit(1);
   }
 }
+
 main();
