@@ -1,4 +1,5 @@
 import User from "../../../Model/userSchema/userSchema.js";
+import User from "../../../Model/userSchema/userSchema.js";
 
  export const getAllUsers = async (req,res)=>{
     try {
@@ -37,10 +38,29 @@ export const getUserById = async (req, res) => {
 }
 
 
+export const userBlockStatus = async (req,res)=>{
+
+    try {
+        
+   
+    const userId = req.params.id;
+    const user = await User.findById(userId);
+
+    if(!user) {
+        return res.status(404).json({success:false, message:"user not found"})
 
 
+    }
+    const newStatus = !user.is_blocked;
+    await User.findByIdAndUpdate(userId, {is_blocked :newStatus})
+    const message = newStatus ? "user blocked successfully" : "user unblocked"
 
+    return res.status(200).json({ success:true, message})
 
+    
 
+} catch (error) {
 
-
+    res.status(500).json({success:false, message:`bad request ${error.message}`})
+}   
+}
