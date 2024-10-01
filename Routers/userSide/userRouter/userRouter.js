@@ -6,6 +6,7 @@ import { cartControllers, cartMiddleware } from '../../../Middleware/joiValidati
 import { getCart, removeCart } from '../../../Controller/userSide/cartController/cartController.js'
 import { getOrders , addOrder } from '../../../Controller/userSide/orderController/orderController.js'
 import { authController } from '../../../Controller/authController/authController.js'
+import { createPayment, paymentVerification } from '../../../Controller/userSide/paymentController/paymentController.js'
 const userRouter = express.Router()
 
 // userRouter.post("/signup", userController.signUp)
@@ -32,7 +33,9 @@ userRouter.delete("/wishlists/:id", authData, wishlistController.deleteWishList)
 userRouter.get("/orders/:id", authData, getOrders)
 userRouter.post("/orders/:id", authData,addOrder )
 
-
+userRouter.get("orders/:id",getOrders)
+userRouter.post("/pyments/:id",createPayment);
+userRouter.post("/paymentverification/:id",paymentVerification)
 
 
 

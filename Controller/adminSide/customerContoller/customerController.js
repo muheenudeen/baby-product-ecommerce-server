@@ -1,5 +1,4 @@
 import User from "../../../Model/userSchema/userSchema.js";
-import User from "../../../Model/userSchema/userSchema.js";
 
  export const getAllUsers = async (req,res)=>{
     try {
@@ -55,7 +54,7 @@ export const userBlockStatus = async (req,res)=>{
     await User.findByIdAndUpdate(userId, {is_blocked :newStatus})
     const message = newStatus ? "user blocked successfully" : "user unblocked"
 
-    return res.status(200).json({ success:true, message})
+    return res.status(200).json({ success:true, message ,newStatus})
 
     
 
