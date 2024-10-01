@@ -21,7 +21,7 @@ export const createPayment = async (req, res) =>{
 
         const cart = await cartSchema.findOne({ userId }).populate("products.productId");
 
-        if (cart) {
+        if (!cart) {
             return res.status(404).json({ success: false, message: "cart is empty !" })
 
         }
@@ -46,13 +46,13 @@ export const createPayment = async (req, res) =>{
             const order = await razorpay.orders.create(options)
 
             if (!order) {
-                console.log("order creation error :", order);
+                // console.log("order creation error :", order);
                 return res.status(400).json({ success: false, message: "order creation faild" })
 
             }
-            res.status(200).json({ success: true, message: "payment order creation successfully" })
+            res.status(200).json({ success: true, message: "payment order creation successfully" ,data:order})
         } catch (error) {
-            console.log("razorpay order creation error:", error);
+            // console.log("razorpay order creation error:", error);
             res.status(500).json({ success: false, message: `razorpay order creation falid ${error.message}` })
 
 
@@ -80,7 +80,7 @@ export const paymentVerification = async (req, res) => {
         }
         const amount = cart.products.map((items) => items.productId.price).reduce((a, b) => a + b, 0);
 
-        if (!razorpay_payment_id || razorpay_order_id || razorpay_signature) {
+        if (!razorpay_payment_id || !razorpay_order_id || !razorpay_signature) {
 
             return res.status(400).json({ success: false, message: "missing payment verification details" })
         }

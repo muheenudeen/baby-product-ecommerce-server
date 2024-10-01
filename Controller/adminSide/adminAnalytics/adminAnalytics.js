@@ -39,12 +39,7 @@ export const totalSales = async (req, res) => {
 
         res.status(200).json({ success: true, message: `total product purchesed is ${totalSales}` })
 
-
-
-
-
     } catch (error) {
-
 
         res.status(500).json({ success: false, message: `bad request :${error.message}` })
     }

@@ -27,8 +27,8 @@ export const addProducts = async (req,res)=>{
         
         res.status(500).json({success:false, message:`bad request${error.message}`})
     }
-
 }
+
 
 
 export const updateProduct = async (req,res) => {
@@ -83,7 +83,7 @@ export const deleteProduct = async (req,res) =>{
 
 
 
-const serchProduct = async (req,res) => {
+export const serchProduct = async (req,res) => {
 
     try {
 
