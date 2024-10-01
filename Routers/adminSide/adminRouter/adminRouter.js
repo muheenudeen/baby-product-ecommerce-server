@@ -17,6 +17,8 @@ adminRouter.put("/products/:id",updateProduct)
 adminRouter.delete("/products/:id",deleteProduct)
 adminRouter.post("/products",serchProduct)
 
+//hideprodyuct
+
 
 
 adminRouter.get("/orders",getAllOrders)
