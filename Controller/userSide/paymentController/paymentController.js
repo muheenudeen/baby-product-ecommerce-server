@@ -8,10 +8,11 @@ import paymentSchemas from "../../../Model/paymentSchema/paymentSchema.js";
 
 
 
-export const createPayment = async (req, res) => {
+export const createPayment = async (req, res) =>{
     try {
 
         const userId = req.params.id;
+        
         const { currency } = req.body;
 
         if (!mongoose.Types.ObjectId.isValid(userId)) {
