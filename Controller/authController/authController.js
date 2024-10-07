@@ -35,9 +35,9 @@ const signUp = async (req, res) => {
             pincode,
             contact,
 
-
         });
 
+        
         await user.save();
         // console.log("User saved successfully:", user);
 
