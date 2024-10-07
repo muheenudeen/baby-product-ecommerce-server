@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    minlength: 6,
+    minlength: 4,
   },
   profileImg: {
     type: String,
@@ -47,6 +47,10 @@ const userSchema = new mongoose.Schema({
   contact: {
     type: Number,
   },
+  is_blocked: {
+    type: Boolean,
+    default: false,
+  },
   role: {
     type:String,
     enum:["user","admin"],
@@ -55,13 +59,13 @@ const userSchema = new mongoose.Schema({
   order: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "orderSchemas",
+      ref: "Order",
 
     },
   ],
     wishlists: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "wishListSchemas",
+      ref: "wishlists",
 
     },
 
