@@ -50,51 +50,54 @@ const signUp = async (req, res) => {
 
 
 
-//login
-
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        const user = await User.findOne({ email });
+        // Find user by email
+        const user = await User.findOne({email});
 
+        // Check if user exists
         if (!user) {
             return res.status(400).json({
                 success: false,
-                message: "No user found. create new account",
-
-            })
+                message: "No user found. Please create a new account",
+            });
         }
 
+        // Compare the provided password with the user's hashed password
         const comparePassword = await bcryptData.comparePassword(password, user.password);
         if (!comparePassword) {
-            return res
-                .status(401)
-                .json({ success: false, message: "incorrect password" })
-
-
-
+            return res.status(401).json({
+                success: false,
+                message: "Incorrect password",
+            });
         }
-        const token = generateToken(user.id)
 
-        res.status(200).json({
+        // Generate a token for the user
+        const token = generateToken(user._id);
+
+        // Send success response with token
+        const message = user.role === "admin" 
+            ? "Admin login successful" 
+            : "User login successful";
+
+        return res.status(200).json({
             success: true,
             data: user,
             token,
-        })
-
-        if(user ?.role === "admin"){
-            res.status(200).json({success:true, message:"admin login successfull"})
-        }else{
-            res.status(200).json({success:true, message:"user login successfull"})
-        }
+            message,
+        });
 
     } catch (error) {
-        res.status(500)
-            .json({ success: false, message: `Server error. Please check your request ${error.message}` })
-
+        // Handle server error
+        return res.status(500).json({
+            success: false,
+            message: `Server error. Please check your request: ${error.message}`,
+        });
     }
-}
+};
+
 
 //logout
 

@@ -42,3 +42,30 @@ export const getOrdersByUser = async (req, res) => {
 
     }
 }
+
+
+
+export const paymentStatus = async (req,res)=> {
+
+    try {
+
+
+      const { status } = req.query
+      const userId = req.params
+
+   
+    const orderByUser = await orderSchemas.findOne({ userId })
+    if (!orderByUser) {
+        return res.status(400).json({ success: false, message: "no order found" })
+    }
+
+    showStatus = await orderSchemas.find({ status });
+
+res.status(200).json({success:true , message:"payment compleet", data:showStatus})
+        
+    } catch (error) {
+        res.status(500).json({ success: false, message: `${error.message}` })
+
+    }
+
+}

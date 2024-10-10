@@ -3,7 +3,7 @@ import User from "../../../Model/userSchema/userSchema.js";
 
 export const getAllUsers = async (req, res) => {
     try {
-        const users = await User.find({ role: { $ne: "admin" } })
+        const users = await User.find()
         if (!users || users.length === 0) {
             return res.status(404).json({ success: false, message: "users not found" })
         }

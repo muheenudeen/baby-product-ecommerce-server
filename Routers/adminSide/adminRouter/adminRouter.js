@@ -3,30 +3,30 @@ import { getAllUsers, getUserById, userBlockStatus } from '../../../Controller/a
 import { addProducts, deleteProduct, serchProduct, updateProduct } from '../../../Controller/adminSide/adminProductController/productController.js'
 import { getAllOrders, getOrdersByUser } from '../../../Controller/adminSide/adminOrder/adminOrder.js'
 import { totalRevenue, totalSales } from '../../../Controller/adminSide/adminAnalytics/adminAnalytics.js'
-
+import authData from '../../../Middleware/joiValidation/authData.js'
 
 const adminRouter = express.Router()
 
-adminRouter.get("/users",getAllUsers)
-adminRouter.get("/users/:id",getUserById)
-adminRouter.put("/users/:id",userBlockStatus)
+adminRouter.get("/users",authData, getAllUsers)
+adminRouter.get("/users/:id",authData, getUserById)
+adminRouter.put("/users/:id",authData, userBlockStatus)
 
 
-adminRouter.post("/products",addProducts)
-adminRouter.put("/products/:id",updateProduct)
-adminRouter.delete("/products/:id",deleteProduct)
-adminRouter.post("/products",serchProduct)
+adminRouter.post("/products",authData, addProducts)
+adminRouter.put("/products/:id",authData,updateProduct)
+adminRouter.delete("/products/:id",authData, deleteProduct)
+adminRouter.post("/products",authData, serchProduct)
 
 //hideprodyuct
 
 
 
-adminRouter.get("/orders",getAllOrders)
-adminRouter.get("/orders/:id",getOrdersByUser)
+adminRouter.get("/orders",authData, getAllOrders)
+adminRouter.get("/orders/:id",authData, getOrdersByUser)
 
 
-adminRouter.get("/totalrevenue",totalRevenue)
-adminRouter.get("/totalsale",totalSales)
+adminRouter.get("/totalrevenue",authData, totalRevenue)
+adminRouter.get("/totalsale",authData ,totalSales)
 
 
 

@@ -6,6 +6,7 @@ import cartSchema from "../../../Model/cartSchema/cartSchema.js";
 // Add product to cart
 
 const addToCart = async (req, res) => {
+
   try {
     const userId = req.params.id;
     const { productId, quantity } = req.body;
@@ -69,6 +70,7 @@ const getCart = async (req, res) => {
       return res.status(404).json({ success: false, message: "Cart not found" });
     }
 
+
     res.status(200).json({ success: true, message: "Cart fetched successfully", data: cart });
   } catch (error) {
     res.status(500).json({
@@ -118,7 +120,7 @@ const removeCart = async (req, res) => {
     await user.save();
     return res.status(200).json({ success: true, message: "Product removed from cart" });
   } catch (error) {
-    return res.status(500).json({ success: false, message: `Cart removal failed: ${error.message}` });
+    return res.status(500).json({ success: false, message: `Cart remove failed: ${error.message}` });
   }
 };
 

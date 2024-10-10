@@ -6,6 +6,7 @@ const orderSchema = new mongoose.Schema(
       ref: "users",
       required: true,
     },
+
     products: [
       {
         productId: {
@@ -19,6 +20,12 @@ const orderSchema = new mongoose.Schema(
         },
       },
     ],
+
+    payment_status: {
+      type: String,
+      status: ["pending", "fullfilled", "error"],
+    },
+    
     Total_Amount: {
       type: Number,
     },
