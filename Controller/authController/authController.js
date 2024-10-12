@@ -28,7 +28,7 @@ const signUp = async (req, res) => {
             sname,
             email,
             password: hashedPassword,
-            role:role || "user",
+            role: role || "user",
             address,
             city,
             state,
@@ -37,14 +37,15 @@ const signUp = async (req, res) => {
 
         });
 
-        
+
         await user.save();
         // console.log("User saved successfully:", user);
 
-        res.status(200).json(user);
+        res.status(200).json({ success: true, message: "User registered successfully", user,});
     } catch (error) {
         console.error("Error during sign up:", error);
-        res.status(500).json({ message: "Internal server error" });
+        res.status(500).json({ success: false, message: "Internal server error" });
+
     }
 };
 
@@ -55,7 +56,7 @@ const login = async (req, res) => {
         const { email, password } = req.body;
 
         // Find user by email
-        const user = await User.findOne({email});
+        const user = await User.findOne({ email });
 
         // Check if user exists
         if (!user) {
@@ -78,8 +79,8 @@ const login = async (req, res) => {
         const token = generateToken(user._id);
 
         // Send success response with token
-        const message = user.role === "admin" 
-            ? "Admin login successful" 
+        const message = user.role === "admin"
+            ? "Admin login successful"
             : "User login successful";
 
         return res.status(200).json({

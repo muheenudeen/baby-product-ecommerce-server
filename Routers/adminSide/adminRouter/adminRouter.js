@@ -7,17 +7,17 @@ import authData from '../../../Middleware/joiValidation/authData.js'
 
 const adminRouter = express.Router()
 
-adminRouter.get("/users",authData, getAllUsers)
+adminRouter.get("/users", getAllUsers)
 adminRouter.get("/users/:id",authData, getUserById)
-adminRouter.put("/users/:id",authData, userBlockStatus)
+adminRouter.put("/users/:id", userBlockStatus)
 
 
-adminRouter.post("/products",authData, addProducts)
-adminRouter.put("/products/:id",authData,updateProduct)
-adminRouter.delete("/products/:id",authData, deleteProduct)
+adminRouter.post("/products", addProducts)
+adminRouter.put("/products/:id",updateProduct)
+adminRouter.delete("/products/:id", deleteProduct)
 adminRouter.post("/products",authData, serchProduct)
 
-//hideprodyuct
+
 
 
 

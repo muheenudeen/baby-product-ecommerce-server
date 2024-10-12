@@ -45,7 +45,7 @@ export const updateProduct = async (req,res) => {
 
         if(!updateProducts){
 
-            return res.status(404).json({success:false, message:"product not found"})
+            return res.status(404).json({success:false, message:"product not found",data:updateProducts})
         }
 
         res.status(200).json({success:true, message:"product updated successfully" ,updateProducts})
@@ -102,3 +102,4 @@ export const serchProduct = async (req,res) => {
     }
 
       };
+

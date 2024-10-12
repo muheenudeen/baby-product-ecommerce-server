@@ -8,7 +8,7 @@ export const productValidation = Joi.object({
     color: Joi.string(),
     quantity: Joi.number().min(0),
     isDeleted: Joi.boolean(),
-    imageSrc: Joi.string().uri(),
+    imageSrc: Joi.string(),
     imageAlt: Joi.string(),
   });
   

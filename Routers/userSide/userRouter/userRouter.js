@@ -11,10 +11,10 @@ const userRouter = express.Router()
 
 
 userRouter.post("/signup", authController.signUp)
-userRouter.get("/login", authController.login)
+userRouter.post("/login", authController.login)
 userRouter.post("/logout", authController.logout)
 
-userRouter.get("/products",authData, productController.getProducts,)
+userRouter.get("/products", productController.getProducts,)
 userRouter.get("/products/:id",authData, productController.getProductsId)
 
 userRouter.post("/cart/:id",authData, cartMiddleware, cartControllers)

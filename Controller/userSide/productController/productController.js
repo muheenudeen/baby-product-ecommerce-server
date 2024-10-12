@@ -3,30 +3,51 @@ import productsSchema from "../../../Model/productSchema/productSchema.js";
 
 //all products
 
+// const getProducts = async (req, res) => {
+//     try {
+
+//         const { category } = req.body;
+//         let getProducts;
+
+
+//         if (category) {
+//             getProducts = await productsSchema.find({ category });
+//             if (getProducts.length === 0) {
+//                 return res.status(400).json({ success: false, message: `categoru not founded` })
+//             }
+//         } else {
+//             getProducts = await productsSchema.find()
+//         }
+//         res.status(200).json({ success: true, data: getProducts, message: "product successfully" })
+
+
+//     } catch (error) {
+
+//         res.status(500).json({ success: false, message: `${error.message}` })
+
+//     }
+// }
+
 const getProducts = async (req, res) => {
     try {
-
-        const { category } = req.body;
-        let getProducts;
-
-
-        if (category) {
-            getProducts = await productsSchema.find({ category });
-            if (getProducts.length === 0) {
-                return res.status(400).json({ success: false, message: `categoru not founded` })
-            }
-        } else {
-            getProducts = await productsSchema.find()
+      const { category } = req.body;
+      let products;
+  
+      if (category) {
+        products = await productsSchema.find({ category });
+        if (products.length === 0) {
+          return res.status(400).json({ success: false, message: `Category not found` });
         }
-        res.status(200).json({ success: true, data: getProducts, message: "product successfully" })
-
-
+      } else {
+        products = await productsSchema.find();
+      }
+  
+      return res.status(200).json({ success: true, data: products, message: "Products retrieved successfully" });
     } catch (error) {
-
-        res.status(500).json({ success: false, message: `${error.message}` })
-
+      return res.status(500).json({ success: false, message: `Error: ${error.message}` });
     }
-}
+  };
+  
 
 //productsId
 
