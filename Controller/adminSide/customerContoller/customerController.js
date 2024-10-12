@@ -42,7 +42,6 @@ export const userBlockStatus = async (req, res) => {
 
     try {
 
-
         const userId = req.params.id;
         const user = await User.findById(userId);
 
