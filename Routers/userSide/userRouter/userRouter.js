@@ -17,7 +17,7 @@ userRouter.post("/logout", authController.logout)
 userRouter.get("/products", productController.getProducts,)
 userRouter.get("/products/:id",authData, productController.getProductsId)
 
-userRouter.post("/cart/:id",authData, cartMiddleware, cartControllers)
+userRouter.post("/cart/:id", cartMiddleware, cartControllers)
 userRouter.get("/cart/:id",authData, getCart)
 userRouter.delete("/cart/:id",authData, removeCart)
 
