@@ -3,10 +3,10 @@ import generateToken from "../../Utils/jwt.js";
 import { bcryptData } from "../../Utils/bcrypt.js";
 
 
-// signup
+// sig
+
 const signUp = async (req, res) => {
     try {
-        // console.log("Request body:", req.body);
 
         const { fname, sname, email, password, address, city, state, pincode, contact, role } = req.body;
 
@@ -18,7 +18,6 @@ const signUp = async (req, res) => {
             });
         }
 
-        // console.log("Email is unique");
 
         const hashedPassword = await bcryptData.hashedPassword(password);
         console.log("Hashed password:", hashedPassword);
@@ -39,7 +38,7 @@ const signUp = async (req, res) => {
 
 
         await user.save();
-        // console.log("User saved successfully:", user);
+        // console.log( user);
 
         res.status(200).json({ success: true, message: "User registered successfully", user,});
     } catch (error) {
@@ -55,10 +54,9 @@ const login = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        // Find user by email
         const user = await User.findOne({ email });
 
-        // Check if user exists
+    
         if (!user) {
             return res.status(400).json({
                 success: false,
@@ -66,7 +64,6 @@ const login = async (req, res) => {
             });
         }
 
-        // Compare the provided password with the user's hashed password
         const comparePassword = await bcryptData.comparePassword(password, user.password);
         if (!comparePassword) {
             return res.status(401).json({
@@ -75,10 +72,10 @@ const login = async (req, res) => {
             });
         }
 
-        // Generate a token for the user
+        
         const token = generateToken(user._id);
 
-        // Send success response with token
+        
         const message = user.role === "admin"
             ? "Admin login successful"
             : "User login successful";
@@ -91,7 +88,7 @@ const login = async (req, res) => {
         });
 
     } catch (error) {
-        // Handle server error
+        
         return res.status(500).json({
             success: false,
             message: `Server error. Please check your request: ${error.message}`,

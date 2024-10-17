@@ -1,7 +1,7 @@
 import express from 'express'
 import { getAllUsers, getUserById, userBlockStatus } from '../../../Controller/adminSide/customerContoller/customerController.js'
 import { addProducts, deleteProduct, serchProduct, updateProduct } from '../../../Controller/adminSide/adminProductController/productController.js'
-import { getAllOrders, getOrdersByUser } from '../../../Controller/adminSide/adminOrder/adminOrder.js'
+import { getAllOrders } from '../../../Controller/adminSide/adminOrder/adminOrder.js'
 import { totalRevenue, totalSales } from '../../../Controller/adminSide/adminAnalytics/adminAnalytics.js'
 import authData from '../../../Middleware/joiValidation/authData.js'
 
@@ -19,10 +19,7 @@ adminRouter.post("/products",authData, serchProduct)
 
 
 
-
-
 adminRouter.get("/orders",authData, getAllOrders)
-adminRouter.get("/orders/:id",authData, getOrdersByUser)
 
 
 adminRouter.get("/totalrevenue",authData, totalRevenue)

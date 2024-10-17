@@ -193,26 +193,35 @@ const getWishList = async (req, res) => {
   }
 };
 
-// Remove from Wishlist
+
 const deleteWishList = async (req, res) => {
   try {
     const userId = req.params.id;
     const { productId } = req.body;
 
-    if (!mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(productId)) {
-      return res.status(400).json({ success: false, errors: ["Invalid IDs"] });
+    // Validate userId
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ success: false, message: "Invalid user id" });
     }
 
+    // Find wishlist
     const wishlist = await wishListSchemas.findOne({ userId });
     if (!wishlist) {
-      return res.status(404).json({ success: false, errors: ["Wishlist not found"] });
+      return res.status(404).json({ success: false, errors: "Wishlist not found" });
     }
 
-    const productIndex = wishlist.products.findIndex(item => item.productId.toString() === productId);
+   
+    const productIndex = wishlist.products.findIndex(
+      item => item.productId.toString() === productId
+    );
+   
+
     if (productIndex === -1) {
-      return res.status(404).json({ success: false, errors: ["Product not found in wishlist"] });
+      return res.status(404).json({ success: false, errors: "Product not found in wishlist" });
     }
+    
 
+    // Remove product from wishlist
     wishlist.products.splice(productIndex, 1);
     await wishlist.save();
 

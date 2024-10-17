@@ -20,29 +20,24 @@ export const getAllOrders = async (req, res) => {
 
 
 
-export const getOrdersByUser = async (req, res) => {
-    try {
 
-        const userId = req.params.id;
-
-        if (!mongoose.Types.ObjectId.isValid(userId)) {
-            return res.status(400).json({ success: false, message: "user not found" })
+//display order
+export const getOrders= async (req,res)=>{
+     try {
+        const userId=req.params.id;
+        if(!mongoose.Types.ObjectId.isValid(userId)){
+         return   res.status(400).json({success:false,message:"Invalid user id"})
         }
-
-        const orderByUser = await orderSchemas.findOne({ userId })
-
-        if (!orderByUser) {
-            return res.status(400).json({ success: false, message: "no order found" })
+        const orderList=await orderSchemas.find({userId}).populate('products.productId')
+        if(!orderList || orderList.length === 0){
+            return res.status(404).json({success:false,message:"Order not found"})
         }
-        res.status(200).json({ success: true, message: "order fetched succesfully", orderByUser })
+        res.status(200).json({success:true,data:orderList,message:"Order list fetch successfully"})
 
-    } catch (error) {
-
-        res.status(500).json({ success: false, message: `bad request ${error.message}` })
-
-    }
+     } catch (error) {
+        
+     }
 }
-
 
 
 export const paymentStatus = async (req,res)=> {
