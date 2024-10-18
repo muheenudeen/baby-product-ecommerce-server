@@ -21,7 +21,6 @@ export const getAllOrders = async (req, res) => {
 
 
 
-//display order
 export const getOrders= async (req,res)=>{
      try {
         const userId=req.params.id;

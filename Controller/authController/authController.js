@@ -3,7 +3,6 @@ import generateToken from "../../Utils/jwt.js";
 import { bcryptData } from "../../Utils/bcrypt.js";
 
 
-// sig
 
 const signUp = async (req, res) => {
     try {

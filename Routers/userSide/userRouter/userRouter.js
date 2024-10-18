@@ -17,12 +17,9 @@ userRouter.post("/logout", authController.logout)
 userRouter.get("/products", productController.getProducts,)
 userRouter.get("/products/:id",authData, productController.getProductsId)
 
-userRouter.post("/cart/:id",addToCart)
 userRouter.post("/cart/:id",cartMiddleware, cartControllers)
 userRouter.get("/cart/:id", getCart)
 userRouter.delete("/cart/:id",removeCart)
-userRouter.post("/cart/:id",productIncrement)
-userRouter.post("/cart/:id",productDecrement)
 
 userRouter.post("/wishlists/:id", wishlistController.addToWishList)
 userRouter.get("/wishlists/:id", wishlistController.getWishList)

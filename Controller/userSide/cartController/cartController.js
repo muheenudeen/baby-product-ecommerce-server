@@ -1,10 +1,11 @@
-
 import mongoose from "mongoose";
 import User from "../../../Model/userSchema/userSchema.js";
 import Product from "../../../Model/productSchema/productSchema.js";
 import Cart from "../../../Model/cartSchema/cartSchema.js";
 
-// Add product to cart
+
+
+
 const addToCart = async (req, res) => {
   try {
     const userId = req.params.id;
@@ -32,6 +33,7 @@ const addToCart = async (req, res) => {
       });
 
       user.cart = cart._id;
+      
       await cart.save();
       await user.save();
     } else {
@@ -40,7 +42,7 @@ const addToCart = async (req, res) => {
       );
 
       if (existingProduct) {
-        existingProduct.quantity += quantity;
+        existingProduct.quantity += 1;
       } else {
         cart.products.push({ productId, quantity });
       }
@@ -59,7 +61,6 @@ const addToCart = async (req, res) => {
 
 
 
-// Display cart products
 const getCart = async (req, res) => {
   try {
     const userId = req.params.id;
@@ -82,7 +83,6 @@ const getCart = async (req, res) => {
 
 
 
-// Remove product from cart
 
 
 const removeCart = async (req, res) => {
@@ -109,9 +109,10 @@ const removeCart = async (req, res) => {
       return res.status(404).json({ success: false, message: "Product not found in cart" });
     }
 
+
     cart.products.splice(productExistIndex, 1);
 
-    if (cart.products.length === 0) {
+    if (cart.products.length === -1) {
       await User.findByIdAndUpdate(userId, { $unset: { cart: "" } });
       await Cart.deleteOne({ _id: cart._id });
     } else {
@@ -125,13 +126,12 @@ const removeCart = async (req, res) => {
   }
 };
 
-// Increment product quantity
 
 
 const productIncrement = async (req, res) => {
   try {
     const userId = req.params.id;
-    const { productId, quantity=1 } = req.body;
+    const { productId, quantity } = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(userId)) {
       return res.status(400).json({ success: false, message: "User not found" });
@@ -142,81 +142,68 @@ const productIncrement = async (req, res) => {
       return res.status(404).json({ success: false, message: "Cart not found" });
     }
 
-    const productIndex = cart.products.find(
+    const product = cart.products.find(
       (product) => product.productId.toString() === productId
     );
 
-    if (!productIndex ) {
+    if (!product ) {
       return res.status(404).json({ success: false, message: "Product not found" });
     }
 
-    cart.products[productIndex].quantity += quantity ;
+    product.quantity = Math.max(1, product.quantity + 1);
 
     await cart.save();
 
-    res.status(200).json({
-      success: true,
-      message: "Product quantity updated successfully",
-      data: cart,
+    res.status(200).json({success: true,message: "Product quantity updated successfully",data: cart,
     });
   } catch (error) {
     res.status(500).json({ success: false, message: `Server error: ${error.message}` });
   }
 };
 
-// Decrement product quantity
+
 
 const productDecrement = async (req, res) => {
   try {
     const userId = req.params.id;
-    const { productId, quantity } = req.body;
+    const { productId } = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(userId)) {
-      return res.status(404).json({ success: false, message: "User not found" });
+      return res.status(400).json({ success: false, message: "Invalid User ID" });
     }
 
-    const cart = await cartSchema.findOne({ userId });
+    const cart = await Cart.findOne({ userId });
     if (!cart) {
       return res.status(404).json({ success: false, message: "Cart not found" });
     }
 
-    const productIndex = cart.products.find(
+    const product = cart.products.find(
       (product) => product.productId.toString() === productId
     );
 
-    if (!productIndex === -1) {
-      return res.status(404).json({ success: false, message: "Product not found" });
-    }
-
-    if (quantity <= 0) {
-      return res.status(400).json({ success: false, message: "Quantity must be greater than zero" });
-    }
     
-    // const currentQuantity = cart.products[productIndex].quantity;
-    // if (currentQuantity - quantity < 1) {
-    //   cart.products[productIndex].quantity = 1;
-    // } else {
-    //   cart.products[productIndex].quantity -= quantity;
-    // }
+    if (!product) {
+      return res.status(404).json({ success: false, message: "Product not found in cart" });
+    }
 
-    cart.products[productIndex].quantity -= quantity;
+    product.quantity = Math.max(1, product.quantity - 1);
 
-    if (cart.products[productIndex].quantity <= 0) {
-      
-      cart.products.splice(productIndex, 1);
+
+    if (product.quantity <= 0) {
+      cart.products = cart.products.filter(
+        (item) => item.productId.toString() !== productId
+      );
     }
 
     await cart.save();
 
-    res.status(200).json({
-      success: true,
-      message: "Product quantity decremented successfully",
-      data: cart,
-    });
+    res.status(200).json({success: true,message: "Product quantity decremented successfully",data: cart});
   } catch (error) {
     res.status(500).json({ success: false, message: `Server error: ${error.message}` });
   }
 };
+
+
 
 
 export { addToCart, getCart, removeCart, productIncrement, productDecrement};
