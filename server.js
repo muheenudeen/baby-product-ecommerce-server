@@ -13,7 +13,7 @@ const app = express();
 const PORT = 3002;
 
 app.use(express.json());
-app.use(cors())
+app.use(cors()) 
 
 app.use('/api/user', userRouter);
 app.use('/api/admin', adminRouter)
