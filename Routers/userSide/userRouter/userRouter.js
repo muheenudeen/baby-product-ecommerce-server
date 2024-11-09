@@ -14,12 +14,15 @@ userRouter.post("/signup", authController.signUp)
 userRouter.post("/login", authController.login)
 userRouter.post("/logout", authController.logout)
 
+
 userRouter.get("/products", productController.getProducts,)
 userRouter.get("/products/:id",authData, productController.getProductsId)
+
 
 userRouter.post("/cart/:id",cartMiddleware, cartControllers)
 userRouter.get("/cart/:id", getCart)
 userRouter.delete("/cart/:id",removeCart)
+
 
 userRouter.post("/wishlists/:id", wishlistController.addToWishList)
 userRouter.get("/wishlists/:id", wishlistController.getWishList)
